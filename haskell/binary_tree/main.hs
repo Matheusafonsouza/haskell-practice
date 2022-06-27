@@ -20,9 +20,16 @@ searchValue (Node value left right) searched =
   | value == searched = True
   | otherwise = (searchValue left searched) || (searchValue right searched) || False
 
+searchValueOccurence :: BinaryTree a -> Int -> Int
+searchValueOccurence Empty searched = 0
+searchValueOccurence (Node value left right) searched =
+  | value == searched = 1 + (searchValueOccurence left searched) + (searchValueOccurence right searched)
+  | otherwise = (searchValueOccurence left searched) + (searchValueOccurence right searched)
+
 
 main :: IO ()
 main = do
   isBalanced Empty
   isBalanced (Node 10 (Node 10 Node 10 Empty) (Node 10 Node 10 Empty))
   searchValue (Node 10 (Node 20 Node 30 Empty) (Node 35 Node 12 Empty)) 20
+  searchValueOccurence (Node 10 (Node 20 Node 30 Empty) (Node 35 Node 12 Empty)) 20
